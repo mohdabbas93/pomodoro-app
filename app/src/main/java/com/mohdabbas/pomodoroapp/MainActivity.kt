@@ -2,6 +2,7 @@ package com.mohdabbas.pomodoroapp
 
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.view.View
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -25,15 +26,23 @@ class MainActivity : AppCompatActivity() {
 
     private var isTimerRunning = false
     private fun setupOnClickListeners() {
-        toggoleTimerButton.setOnClickListener {
+        toggleTimerButton.setOnClickListener {
             if (!isTimerRunning) {
                 startTimer()
-                toggoleTimerButton.changeText(R.string.pause)
+                toggleTimerButton.changeText(R.string.pause)
+                restTimerButton.visibility = View.GONE
             } else {
                 pauseTimer()
-                toggoleTimerButton.changeText(R.string.start)
+                toggleTimerButton.changeText(R.string.resume)
+                restTimerButton.visibility = View.VISIBLE
             }
             isTimerRunning = !isTimerRunning
+        }
+
+        restTimerButton.setOnClickListener {
+            restTimer()
+            restTimerButton.visibility = View.GONE
+            toggleTimerButton.changeText(R.string.start)
         }
     }
 
@@ -65,5 +74,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun pauseTimer() {
         countDownTimer.cancel()
+    }
+
+    private fun restTimer() {
+        countDownTimer.cancel()
+        timeLeftInMillis = focusTimeInMillis
+        updateCountDownText(timeLeftInMillis)
     }
 }
