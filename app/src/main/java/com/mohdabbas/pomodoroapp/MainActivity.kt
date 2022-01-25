@@ -22,9 +22,11 @@ class MainActivity : AppCompatActivity() {
         timeLeftInMillis = focusTimeInMillis
 
         setupOnClickListeners()
+        updateCountDownText(focusTimeInMillis)
     }
 
     private var isTimerRunning = false
+
     private fun setupOnClickListeners() {
         toggleTimerButton.setOnClickListener {
             if (!isTimerRunning) {
